@@ -1,0 +1,54 @@
+<h1>הפרטים שלי</h1>
+<div id="login">
+  <form #myForm (ngSubmit)="add(myForm)" #myF="ngForm">
+    <label>שם:</label><br>
+    <input type="text" name="fname" value="fname" placeholder="first name" [(ngModel)]="myPerson.FirstName"
+      #fname="ngModel" required /><br>
+    <p *ngIf="fname.touched&&fname.errors?.['required']">שם פרטי זהו שדה חובה</p><br>
+    <label>שם משפחה:</label><br>
+    <input type="text" name="lname" [(ngModel)]="myPerson.LastName" placeholder="last name" #lname="ngModel"
+      required /><br>
+    <p *ngIf="lname.touched&&lname.errors?.['required']">שם משפחה זהו שדה חובה</p><br>
+    <label>תעודת זהות:</label><br>
+    <input type="text" name="TzParent" value="Tz" [(ngModel)]="myPerson.Tz" placeholder="Tz" required
+      #TzParent="ngModel" pattern="[0-9]+" minlength="9" maxlength="9" /><br>
+    <p *ngIf="TzParent.touched&&TzParent.errors"> חובה למלא תעודת זהות בעלת 9 ספרות</p><br>
+    <label>תאריך לידה:</label><br>
+    <input type="date" name="DateParent" [(ngModel)]="myPerson.DateOfBirth"  #dateParent="ngModel"
+      required max="{{today|date:'dd-mm-yy'}}" /><br>
+    <p *ngIf="dateParent.touched&&dateParent.errors">חובה למלא תאריך הקטן מהיום</p><br>
+    <label>בחר מין :</label><br>
+    <select [(ngModel)]="myPerson.Gender" name="Gender" #Gender="ngModel" required>
+      <option value="null" disabled>בחר מין</option>
+      <option value="mail">זכר</option>
+      <option value="female">נקבה</option>
+    </select><br>
+    <p *ngIf="Gender.touched&&Gender.errors?.['required']">חובה לציין מין</p><br>
+    <label>בחר קופת חולים: </label><br>
+    <select [(ngModel)]="myPerson.HMO" name="HMO" #HMO="ngModel" required>
+      <option value="null" disabled>בחר קופ"ח</option>>
+      <option value="Meuchedet">מאוחדת</option>
+      <option value="Macabi">מכבי</option>
+      <option value="Clalit">כללית</option>
+      <option value="Leumit">לאומית</option>
+    </select>
+    <br>
+    <p *ngIf="HMO.touched&&HMO.errors?.['required']">חובה לציין קופ"ח</p><br>
+    <input type="button" id="addChild1" (click)="addChild1()" value="הוסף ילד" />
+    <div *ngIf="isShowChildDetails">
+      <label>שם הילד:</label><br>
+      <input type="text" name="name" value="fname" placeholder="first name" [(ngModel)]="temp.Name" #name="ngModel"
+        required /><br>
+      <p *ngIf="name.touched&&name.errors?.['required']">שם זהו שדה חובה</p><br>
+      <label>תעודת זהות</label><br>
+      <input type="text" name="Tz" value="Tz" [(ngModel)]="temp.Tz" placeholder="Tz" required #TzChild="ngModel"  pattern="[0-9]+" minlength="9" maxlength="9"/><br>
+      <label> תאריך לידה</label><br>
+      <p *ngIf="TzChild.touched&&TzChild.errors">חובה למלא תעודת זהות בעלת 9 ספרות</p><br>
+      <input type="date" name="dateChild" [(ngModel)]="temp.DateOfBirth"  #dateChild="ngModel"
+        required max="{{today|date:'dd-mm-yy'}}"/><br>
+      <p *ngIf="dateChild.touched&&dateChild.errors">חובה למלא תאריך קטן מהיום</p><br>
+      <input [disabled]="!(temp.Name&&temp.Tz)" type="button" id="addChild" (click)="addChild()" value="שמור ילד" /><br>
+    </div>
+    <input type="submit" id="submit" [disabled]="!myF.valid" />
+  </form>
+</div>
